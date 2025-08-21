@@ -3,14 +3,29 @@ name: Build Pipeline
 on:
   push:
     branches:
-      - main  # or the branch you want to trigger on
+      - main   # or your target branch
+  workflow_dispatch:   # allows manual trigger
 
 jobs:
   build-job:
-    runs-on: [self-hosted, Linux, X64]
+    runs-on: [self-hosted, Linux, X64]   # your EC2 self-hosted runner
     steps:
-      - uses: actions/checkout@v3
-      - run: echo "Starting build..."
-      - run: mkdir -p build
-      - run: echo "Hello from GitHub Actions Build Stage!" > build/output.txt
-      - run: echo "Build completed."
+      # 1. Checkout your repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Ensure build directory exists
+      - name: Create build folder safely
+        run: |
+          mkdir -p $GITHUB_WORKSPACE/build
+          echo "Build folder ready"
+
+      # 3. Write output to a file
+      - name: Write output file
+        run: |
+          echo "Hello from GitHub Actions Build Stage!" > $GITHUB_WORKSPACE/build/output.txt
+          echo "Output file created at $GITHUB_WORKSPACE/build/output.txt"
+
+      # 4. Confirm completion
+      - name: Build completed
+        run: echo "Build job completed successfully."
