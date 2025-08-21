@@ -1,25 +1,12 @@
-name: CI Workflow
+stages:
+  - build
 
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  build-job:
-    runs-on: self-hosted   # Use your self-hosted runner
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Start build
-        run: echo "Starting build..."
-
-      - name: Create build folder
-        run: mkdir -p build
-
-      - name: Write output
-        run: echo "Hello from GitHub Actions Build Stage!" > build/output.txt
-
-      - name: Build completed
-        run: echo "Build completed."
+build-job:
+  stage: build
+  tags:
+    - self-hosted   # Match the tag(s) assigned to your runner
+  script:
+    - echo "Starting build..."
+    - mkdir -p build
+    - echo "Hello from GitLab CI Build Stage!" > build/output.txt
+    - echo "Build completed."
