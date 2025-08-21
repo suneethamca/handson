@@ -1,0 +1,16 @@
+name: Build Pipeline
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to trigger on
+
+jobs:
+  build-job:
+    runs-on: [self-hosted, Linux, X64]
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Starting build..."
+      - run: mkdir -p build
+      - run: echo "Hello from GitHub Actions Build Stage!" > build/output.txt
+      - run: echo "Build completed."
