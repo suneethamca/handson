@@ -1,4 +1,10 @@
 stages:
-   build
+  - build
 
-   
+build-job:
+  stage: build
+  script:
+    - echo "Starting build..."
+    - mkdir -p build
+    - echo "Hello from GitLab CI Build Stage!" > build/output.txt
+    - echo "Build completed."
